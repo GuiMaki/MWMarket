@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/expo/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.guimaki.MWMarket"
     },
     "web": {
       "bundler": "metro",
@@ -33,6 +34,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2794fcc3-c785-4359-9670-ea8b0be2acd6"
+      }
     }
   }
 }
