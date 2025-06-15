@@ -108,7 +108,6 @@ const Login = () => {
               error={errors.password}
             />
 
-            {/* Manter Conectado + Esqueci Senha */}
             <View
               style={{
                 flexDirection: "row",

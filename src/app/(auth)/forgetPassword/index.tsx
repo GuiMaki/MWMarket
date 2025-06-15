@@ -107,7 +107,7 @@ const ForgetPassword = () => {
             title="Recuperar Senha"
             gradientColors={["#8e2de2", "#4a00e0"]}
             textColor={colors.white}
-            style={{ marginTop: 60, alignSelf: "center" }}
+            style={{ marginTop: 100, alignSelf: "center" }}
             onPress={handleSubmit(onSubmit, onError)}
           />
         </Animated.View>

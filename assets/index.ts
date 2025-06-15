@@ -7,6 +7,15 @@ export { default as resetPasswordSuccess } from './images/resetPasswordSucces.pn
 export { default as profilePicPicker } from './images/profilePicPicker.png';
 export { default as defaultProfilePic } from './images/defaultProfilePic.png';
 export { default as registerSuccess } from './images/registerSuccess.png'
+export { default as banner } from './images/banner.png'
+export { default as macBook1 } from './images/mcBook1.png'
+export { default as macBook2 } from './images/mcBook2.png'
+export { default as pc1 } from './images/pc1.png'
+export { default as pc2 } from './images/pc2.png'
+export { default as amd } from './images/AMD.png'
+export { default as intel } from './images/intel.png'
+export { default as headset } from './images/headsetHyperx.png'
+export { default as mouse } from './images/mouseRedragon.png'
 
 export { default as arrow }  from './icons/arrow.png';
 export { default as PasswordEyeActiveIcon } from './icons/PasswordEyeActiveIcon.png';
@@ -15,3 +24,8 @@ export { default as googleIcon } from './icons/googleIcon.png';
 export { default as appleIcon } from './icons/appleIcon.png';
 export { default as facebookIcon } from './icons/facebookIcon.png';
 export { default as planeIcon } from './icons/planeIcon.png';
+export { default as bagIcon } from './icons/bagIcon.png'
+export { default as home } from './icons/Home.png'
+export { default as categories } from './icons/categories.png'
+export { default as stack } from './icons/stack.png'
+export { default as profilePic } from './icons/profilePic.png'

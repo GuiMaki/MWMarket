@@ -37,7 +37,7 @@ type Props<TFieldValues extends FieldValues> = {
   error?: FieldError;
   type?: TextInputMaskTypeProp;
   options?: TextInputMaskOptionProp;
-  leftIcon?: { name: IconT; size?: number; style?: any };  // ✅ Corrigido aqui!
+  leftIcon?: { name: IconT; size?: number; style?: any };
 
   isDropdown?: boolean;
   dropdownItems?: { label: string; value: string }[];

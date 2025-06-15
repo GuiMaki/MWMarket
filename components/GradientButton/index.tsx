@@ -43,7 +43,7 @@ const GradientButton = ({
     <TouchableOpacity
       {...props}
       activeOpacity={0.8}
-      style={[containerStyle, props.style]} // Merge de estilos
+      style={[containerStyle, props.style]}
     >
       {!wired ? (
         <LinearGradient
