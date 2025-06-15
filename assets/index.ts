@@ -7,6 +7,6 @@ export { default as logoAlt } from './images/logoAlt.png';
 export { default as arrow }  from './icons/arrow.png';
 export { default as PasswordEyeActiveIcon } from './icons/PasswordEyeActiveIcon.png';
 export { default as PasswordEyeInactiveIcon } from './icons/PasswordEyeInactiveIcon.png';
-export { defauçt as googleIcon } from './icons/googleIcon.png';
+export { default as googleIcon } from './icons/googleIcon.png';
 export { default as appleIcon } from './icons/appleIcon.png';
 export { default as facebookIcon } from './icons/facebookIcon.png';

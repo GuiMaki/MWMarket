@@ -10,6 +10,7 @@ import Animated, { FadeIn } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { logoAlt } from "@/assets";
 import BackButton from "@/components/BackButton";
@@ -20,28 +21,47 @@ import colors from "@/global/colors";
 import GradientButton from "@/components/GradientButton";
 import LoginSeparator from "@/components/LoginSeparator";
 import SocialLoginButton from "@/components/SocialLoginButton";
+import { LoginSchema, LoginForm } from "@/validations/Login.Validation";
 
 const Login = () => {
-  const { control, handleSubmit } = useForm();
   const router = useRouter();
 
-  const onSubmit = (data: any) => {
-    console.log("Dados do formulário:", data);
+  const { control, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+  resolver: zodResolver(LoginSchema),
+  });
+
+  const onSubmit = (data: LoginForm) => {
+    router.push("../(main)/home");
+  };
+
+  const onError = (errors: any) => {
+    console.log("Erros de validação:", errors);
   };
 
   const handleForgetPassword = () => {
-    router.navigate("./ForgetPassword");
+    router.push("./forgetPassword");
+  };
+
+  const handleRegister = () => {
+    router.push("./register");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView
-        style={{ marginTop: 20, marginLeft: 30, marginRight: 30, flex: 1 }}
+        style={{
+          marginTop: 20,
+          marginLeft: 30,
+          marginRight: 30,
+          flex: 1,
+          justifyContent: "space-around",
+        }}
       >
         <Animated.View
           entering={FadeIn.delay(500).duration(500)}
-          style={{ flex: 1 }}
+          style={{ flex: 1, justifyContent: "space-around" }}
         >
+          {/* Header */}
           <View
             style={{
               flexDirection: "row",
@@ -54,31 +74,31 @@ const Login = () => {
             <Image
               source={logoAlt}
               contentFit="contain"
-              style={{
-                width: 100,
-                height: 30,
-              }}
+              style={{ width: 100, height: 30 }}
             />
           </View>
 
+          {/* Title */}
           <Text
             style={{
               fontFamily: fontFamily.nunito_bold[0],
               fontSize: 35,
               fontWeight: "900",
-              marginTop: 40,
+              marginTop: 30,
             }}
           >
-            {" "}
-            Bem-vindo de volta {"\n"} sentimos sua falta
+            Bem-vindo de volta {"\n"}sentimos sua falta
           </Text>
-          <View style={{ marginTop: 60, gap: 25 }}>
+
+          {/* Form */}
+          <View style={{ marginTop: 40, gap: 25 }}>
             <InputComponent
               name="email"
               label="E-mail"
               placeholder="example@email.com"
               keyboardType="email-address"
               control={control}
+              error={errors.email}
             />
 
             <InputComponent
@@ -87,13 +107,14 @@ const Login = () => {
               placeholder="********"
               control={control}
               password
+              error={errors.password}
             />
+
+            {/* Manter Conectado + Esqueci Senha */}
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginTop: 0,
-                alignContent: "center",
                 alignItems: "center",
               }}
             >
@@ -110,6 +131,7 @@ const Login = () => {
                   Manter Conectado
                 </Text>
               </View>
+
               <TouchableOpacity onPress={handleForgetPassword}>
                 <Text
                   style={{
@@ -123,13 +145,17 @@ const Login = () => {
               </TouchableOpacity>
             </View>
           </View>
+
+          {/* Botão Login */}
           <GradientButton
             title="Fazer Login"
-            onPress={handleSubmit(onSubmit)}
+            onPress={handleSubmit(onSubmit, onError)}
             gradientColors={["#8e2de2", "#4a00e0"]}
             textColor={colors.white}
-            style={{ marginTop: 70 }}
+            style={{ marginTop: 50 }}
           />
+
+          {/* Separador */}
           <View
             style={{
               flexDirection: "row",
@@ -141,18 +167,46 @@ const Login = () => {
             <LoginSeparator />
           </View>
 
-          <View 
+          {/* Social Login */}
+          <View
             style={{
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 20,
+              marginTop: 10,
+              marginBottom: 70,
               gap: 50,
             }}
           >
-            <SocialLoginButton icon="googleIcon"/>
-            <SocialLoginButton icon="facebookIcon"/>
-            <SocialLoginButton icon="appleIcon"/>
+            <SocialLoginButton icon="googleIcon" />
+            <SocialLoginButton icon="facebookIcon" />
+            <SocialLoginButton icon="appleIcon" />
+          </View>
+
+          {/* Criar Conta */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              marginBottom: 30,
+            }}
+          >
+            <Text style={{ fontFamily: fontFamily.nunito_bold, fontSize: 17 }}>
+              Novo usuário?
+            </Text>
+            <TouchableOpacity onPress={handleRegister}>
+              <Text
+                style={{
+                  color: colors.primary[100],
+                  fontFamily: fontFamily.nunito_bold,
+                  fontWeight: "900",
+                  fontSize: 17,
+                }}
+              >
+                {" "}
+                Crie Uma conta
+              </Text>
+            </TouchableOpacity>
           </View>
         </Animated.View>
       </SafeAreaView>

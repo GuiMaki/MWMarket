@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  FieldError,
   FieldValues,
   useController,
   UseControllerProps,
@@ -33,6 +34,7 @@ type Props<TFieldValues extends FieldValues> = {
   label?: string;
   password?: boolean;
   placeholder?: string;
+  error?: FieldError;
   type?: TextInputMaskTypeProp;
   options?: TextInputMaskOptionProp;
   leftIcon?: { name: keyof typeof IconComponent; size?: number; style?: any };
@@ -52,7 +54,7 @@ const InputComponent = <TFieldValues extends FieldValues>({
   leftIcon,
   ...props
 }: Props<TFieldValues>) => {
-  const [passwordHidden, setPasswordHidden] = useState(password);
+  const [passwordHidden, setPasswordHidden] = useState(!!password);
   const [isFocused, setIsFocused] = useState(false);
 
   if (!control) {
@@ -86,7 +88,7 @@ const InputComponent = <TFieldValues extends FieldValues>({
     if (isFocused) {
       return colors.primary[100];
     }
-    if (error?.message) {
+    if (error) {
       return colors.red;
     }
     return colors.primary[25];
@@ -114,7 +116,7 @@ const InputComponent = <TFieldValues extends FieldValues>({
             flexDirection: "row",
             alignItems: "center",
             position: "relative",
-            paddingBottom: 0
+            paddingBottom: 0,
           }}
         >
           {leftIcon && (
@@ -182,27 +184,27 @@ const InputComponent = <TFieldValues extends FieldValues>({
 
           {password && (
             <TouchableOpacity
-  style={{
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    right: 15,
-    top: "50%",
-    transform: [{ translateY: -12 }], 
-    height: 24,
-    width: 24,
-  }}
-  onPress={() => setPasswordHidden(!passwordHidden)}
->
-  <IconComponent
-    name={
-      passwordHidden
-        ? "PasswordEyeInactiveIcon"
-        : "PasswordEyeActiveIcon"
-    }
-    size={24}
-  />
-</TouchableOpacity>
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                position: "absolute",
+                right: 15,
+                top: "50%",
+                transform: [{ translateY: -12 }],
+                height: 24,
+                width: 24,
+              }}
+              onPress={() => setPasswordHidden(!passwordHidden)}
+            >
+              <IconComponent
+                name={
+                  passwordHidden
+                    ? "PasswordEyeInactiveIcon"
+                    : "PasswordEyeActiveIcon"
+                }
+                size={24}
+              />
+            </TouchableOpacity>
           )}
           <View
             style={{
@@ -217,7 +219,7 @@ const InputComponent = <TFieldValues extends FieldValues>({
           />
         </View>
 
-        {error?.message && (
+        {error && (
           <Animated.View entering={FadeIn} exiting={FadeOut}>
             <Text
               style={{

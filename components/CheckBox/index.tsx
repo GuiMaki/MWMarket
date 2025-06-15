@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import colors from "@/global/colors";
-import fontFamily from "@/global/fontFamily";
 
-const CustomCheckbox = () => {
+const Checkbox = () => {
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    console.log("Checkbox state changed:", checked);
+  }, [checked]);
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -36,4 +39,4 @@ const CustomCheckbox = () => {
   );
 };
 
-export default CustomCheckbox;
+export default Checkbox;
