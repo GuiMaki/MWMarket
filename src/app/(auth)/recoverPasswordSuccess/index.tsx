@@ -90,7 +90,7 @@ const RecoverPasswordSuccess = () => {
             title="Entrar"
             gradientColors={["#8e2de2", "#4a00e0"]}
             textColor={colors.white}
-            style={{ marginTop: 100 }}
+            style={{ marginTop: 100, alignSelf: "center" }}
             onPress={handleNavigate}
           />
         </Animated.View>

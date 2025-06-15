@@ -64,7 +64,7 @@ const GradientButton = ({
       <Text
         style={{
           fontSize: 20,
-          fontFamily: fontFamily.nunito[0],
+          fontFamily: fontFamily.nunito,
           color: handleTextColor,
         }}
       >

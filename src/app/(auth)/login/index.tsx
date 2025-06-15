@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   const handleRegister = () => {
-    router.push("./register");
+    router.push("./register/step1");
   };
 
   return (
@@ -149,7 +149,7 @@ const Login = () => {
             onPress={handleSubmit(onSubmit, onError)}
             gradientColors={["#8e2de2", "#4a00e0"]}
             textColor={colors.white}
-            style={{ marginTop: 50 }}
+            style={{ marginTop: 50, alignSelf: "center" }}
           />
 
           <View

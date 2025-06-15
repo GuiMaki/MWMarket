@@ -24,10 +24,10 @@ import Animated, {
   FadeOut,
   LinearTransition,
 } from "react-native-reanimated";
+import RNPickerSelect from "react-native-picker-select";
 
 import colors from "@/global/colors";
-
-import { IconComponent } from "../IconComponent";
+import { IconComponent, IconT } from "../IconComponent";
 import fontFamily from "@/global/fontFamily";
 
 type Props<TFieldValues extends FieldValues> = {
@@ -37,7 +37,10 @@ type Props<TFieldValues extends FieldValues> = {
   error?: FieldError;
   type?: TextInputMaskTypeProp;
   options?: TextInputMaskOptionProp;
-  leftIcon?: { name: keyof typeof IconComponent; size?: number; style?: any };
+  leftIcon?: { name: IconT; size?: number; style?: any };  // ✅ Corrigido aqui!
+
+  isDropdown?: boolean;
+  dropdownItems?: { label: string; value: string }[];
 } & TextInputProps &
   UseControllerProps<TFieldValues>;
 
@@ -52,6 +55,8 @@ const InputComponent = <TFieldValues extends FieldValues>({
   autoCapitalize = "none",
   multiline = false,
   leftIcon,
+  isDropdown = false,
+  dropdownItems,
   ...props
 }: Props<TFieldValues>) => {
   const [passwordHidden, setPasswordHidden] = useState(!!password);
@@ -85,12 +90,8 @@ const InputComponent = <TFieldValues extends FieldValues>({
   };
 
   const handleBorderColor = () => {
-    if (isFocused) {
-      return colors.primary[100];
-    }
-    if (error) {
-      return colors.red;
-    }
+    if (isFocused) return colors.primary[100];
+    if (error) return colors.red;
     return colors.primary[25];
   };
 
@@ -111,113 +112,148 @@ const InputComponent = <TFieldValues extends FieldValues>({
       )}
 
       <View style={{ gap: 4 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            position: "relative",
-            paddingBottom: 0,
-          }}
-        >
-          {leftIcon && (
+        {isDropdown && dropdownItems ? (
+          <View>
+            <RNPickerSelect
+              placeholder={{
+                label: placeholder || "Selecione...",
+                value: null,
+                color: colors.highlight,
+              }}
+              items={dropdownItems}
+              onValueChange={field.onChange}
+              value={field.value}
+              style={{
+                inputIOS: {
+                  paddingLeft: 8,
+                  paddingVertical: 12,
+                  borderWidth: 1,
+                  borderColor: handleBorderColor(),
+                  borderRadius: 8,
+                  color: colors.text,
+                  fontFamily: fontFamily.nunito_bold[0],
+                },
+                inputAndroid: {
+                  paddingLeft: 8,
+                  paddingVertical: 8,
+                  borderWidth: 1,
+                  borderColor: handleBorderColor(),
+                  borderRadius: 8,
+                  color: colors.text,
+                  fontFamily: fontFamily.nunito_bold[0],
+                },
+              }}
+            />
+          </View>
+        ) : (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              position: "relative",
+              paddingBottom: 0,
+            }}
+          >
+            {leftIcon && (
+              <View
+                style={{
+                  position: "absolute",
+                  left: 8,
+                  top: "50%",
+                  transform: [{ translateY: -12 }],
+                }}
+              >
+                <IconComponent
+                  name={leftIcon.name}
+                  size={leftIcon.size || 24}
+                  style={leftIcon.style}
+                />
+              </View>
+            )}
+
+            {type ? (
+              <TextInputMask
+                style={{
+                  flex: 1,
+                  fontFamily: fontFamily.nunito_bold[0],
+                  fontSize: 16,
+                  color: colors.text,
+                  lineHeight: 24,
+                  paddingRight: password ? 32 : 8,
+                  paddingLeft: leftIcon ? 40 : 8,
+                }}
+                onChangeText={field.onChange}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                value={field.value}
+                refInput={field.ref}
+                type={type}
+                secureTextEntry={passwordHidden}
+                placeholder={placeholder}
+                placeholderTextColor={colors.highlight}
+                options={options}
+                multiline={multiline}
+                {...props}
+              />
+            ) : (
+              <TextInput
+                style={{
+                  paddingRight: password ? 32 : 8,
+                  paddingLeft: leftIcon ? 40 : 8,
+                  flex: 1,
+                  fontFamily: fontFamily.nunito_bold[0],
+                  color: colors.text,
+                }}
+                onChangeText={field.onChange}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                secureTextEntry={passwordHidden}
+                placeholder={placeholder}
+                autoCapitalize={autoCapitalize}
+                placeholderTextColor={colors.highlight}
+                value={field.value}
+                multiline={multiline}
+                {...props}
+              />
+            )}
+
+            {password && (
+              <TouchableOpacity
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "absolute",
+                  right: 15,
+                  top: "50%",
+                  transform: [{ translateY: -12 }],
+                  height: 24,
+                  width: 24,
+                }}
+                onPress={() => setPasswordHidden(!passwordHidden)}
+              >
+                <IconComponent
+                  name={
+                    passwordHidden
+                      ? "PasswordEyeInactiveIcon"
+                      : "PasswordEyeActiveIcon"
+                  }
+                  size={24}
+                />
+              </TouchableOpacity>
+            )}
             <View
               style={{
                 position: "absolute",
-                left: 8,
-                top: "50%",
-                transform: [{ translateY: -12 }],
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 3,
+                backgroundColor: handleBorderColor(),
+                borderRadius: 8,
               }}
-            >
-              <IconComponent
-                name={leftIcon.name}
-                size={leftIcon.size || 24}
-                style={leftIcon.style}
-              />
-            </View>
-          )}
-
-          {type ? (
-            <TextInputMask
-              style={{
-                flex: 1,
-                fontFamily: fontFamily.nunito_bold[0],
-                fontSize: 16,
-                color: colors.text,
-                lineHeight: 24,
-                paddingRight: password ? 32 : 8,
-                paddingLeft: leftIcon ? 40 : 8,
-              }}
-              onChangeText={field.onChange}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              value={field.value}
-              refInput={field.ref}
-              type={type}
-              secureTextEntry={passwordHidden}
-              placeholder={placeholder}
-              placeholderTextColor={colors.highlight}
-              options={options}
-              multiline={multiline}
-              {...props}
             />
-          ) : (
-            <TextInput
-              style={{
-                paddingRight: password ? 32 : 8,
-                paddingLeft: leftIcon ? 40 : 8,
-                flex: 1,
-                fontFamily: fontFamily.nunito_bold[0],
-                color: colors.text,
-              }}
-              onChangeText={field.onChange}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              secureTextEntry={passwordHidden}
-              placeholder={placeholder}
-              autoCapitalize={autoCapitalize}
-              placeholderTextColor={colors.highlight}
-              value={field.value}
-              multiline={multiline}
-              {...props}
-            />
-          )}
-
-          {password && (
-            <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                position: "absolute",
-                right: 15,
-                top: "50%",
-                transform: [{ translateY: -12 }],
-                height: 24,
-                width: 24,
-              }}
-              onPress={() => setPasswordHidden(!passwordHidden)}
-            >
-              <IconComponent
-                name={
-                  passwordHidden
-                    ? "PasswordEyeInactiveIcon"
-                    : "PasswordEyeActiveIcon"
-                }
-                size={24}
-              />
-            </TouchableOpacity>
-          )}
-          <View
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 3,
-              backgroundColor: handleBorderColor(),
-              borderRadius: 8,
-            }}
-          />
-        </View>
+          </View>
+        )}
 
         {error && (
           <Animated.View entering={FadeIn} exiting={FadeOut}>
