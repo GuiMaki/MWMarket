@@ -286,7 +286,7 @@ const Home = () => {
               },
             ]}
           />
-          <View style={{ height: 200 }} />
+          <View style={{ height: 130 }} />
         </Animated.View>
       </ScrollView>
       <Animated.View entering={FadeIn.delay(500).duration(500)}>
