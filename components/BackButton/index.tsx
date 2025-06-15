@@ -1,15 +1,26 @@
 import { TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
-
+import { useRouter, type Route } from "expo-router";
 import { arrow } from "@/assets";
 
-const BackButton = () => {
+type BackButtonProps = {
+  to?: Route; 
+};
+
+const BackButton = ({ to }: BackButtonProps) => {
   const router = useRouter();
+
+  const handlePress = () => {
+    if (to) {
+      router.push(to);
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <TouchableOpacity
-      onPress={() => router.back()}
+      onPress={handlePress}
       style={{
         position: "absolute",
         left: 0,
@@ -26,6 +37,6 @@ const BackButton = () => {
       />
     </TouchableOpacity>
   );
-}
+};
 
 export default BackButton;

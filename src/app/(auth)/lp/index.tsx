@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { Image } from "expo-image";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 
 import { bgImg, smallLogo, onBoardImg } from "@/assets";
@@ -71,7 +71,7 @@ const OnBoard = () => {
           <Image source={onBoardImg} style={{ width: 400, height: 400, marginBottom: -50 }} />
         </Animated.View>
 
-        <Animated.View entering={FadeInDown.delay(1100).duration(1000)}>
+        <Animated.View entering={FadeIn.delay(1100).duration(1000)}>
             <Button 
               title="Continuar"
               backgroundColor={colors.white}

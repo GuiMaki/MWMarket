@@ -61,7 +61,7 @@ const Login = () => {
           entering={FadeIn.delay(500).duration(500)}
           style={{ flex: 1, justifyContent: "space-around" }}
         >
-          {/* Header */}
+
           <View
             style={{
               flexDirection: "row",
@@ -69,7 +69,7 @@ const Login = () => {
               justifyContent: "center",
             }}
           >
-            <BackButton />
+            <BackButton to="/lp"/>
 
             <Image
               source={logoAlt}
@@ -78,7 +78,6 @@ const Login = () => {
             />
           </View>
 
-          {/* Title */}
           <Text
             style={{
               fontFamily: fontFamily.nunito_bold[0],
@@ -90,7 +89,6 @@ const Login = () => {
             Bem-vindo de volta {"\n"}sentimos sua falta
           </Text>
 
-          {/* Form */}
           <View style={{ marginTop: 40, gap: 25 }}>
             <InputComponent
               name="email"
@@ -146,7 +144,6 @@ const Login = () => {
             </View>
           </View>
 
-          {/* Botão Login */}
           <GradientButton
             title="Fazer Login"
             onPress={handleSubmit(onSubmit, onError)}
@@ -155,7 +152,6 @@ const Login = () => {
             style={{ marginTop: 50 }}
           />
 
-          {/* Separador */}
           <View
             style={{
               flexDirection: "row",
@@ -167,7 +163,6 @@ const Login = () => {
             <LoginSeparator />
           </View>
 
-          {/* Social Login */}
           <View
             style={{
               flexDirection: "row",
@@ -183,7 +178,6 @@ const Login = () => {
             <SocialLoginButton icon="appleIcon" />
           </View>
 
-          {/* Criar Conta */}
           <View
             style={{
               flexDirection: "row",

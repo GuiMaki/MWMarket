@@ -3,6 +3,7 @@ export { default as bigLogo} from './images/bigLogo.png';
 export { default as smallLogo } from './images/smallLogo.png';
 export { default as onBoardImg  } from './images/onBoardImg.png';
 export { default as logoAlt } from './images/logoAlt.png';
+export { default as resetPasswordSuccess } from './images/resetPasswordSucces.png';
 
 export { default as arrow }  from './icons/arrow.png';
 export { default as PasswordEyeActiveIcon } from './icons/PasswordEyeActiveIcon.png';
