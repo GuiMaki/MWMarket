@@ -1,0 +1,36 @@
+# Node modules (sempre excluído, pois será reinstalado na build)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios de build locais
+android/build/
+ios/build/
+.expo/
+.expo-shared/
+
+# Arquivos de configuração local
+*.local
+*.env.local
+
+# Arquivos de cache
+*.tsbuildinfo
+.cache/
+.tmp/
+
+# Arquivos de IDE e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Arquivos de testes e cobertura
+coverage/
+*.lcov
+
+# Dependências nativas instaladas manualmente (exemplo, para evitar problemas)
+Pods/
