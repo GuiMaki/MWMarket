@@ -25,50 +25,7 @@ import colors from "@/global/colors";
 import fontFamily from "@/global/fontFamily";
 import { logoAlt } from "@/assets";
 import BackButton from "@/components/BackButton";
-
-interface Props {
-  stateAndCity: string;
-  description?: string;
-  onSelect: (value: string) => void;
-}
-
-const StateDropdown = ({
-  stateAndCity,
-  description = "Localização aproximada",
-  onSelect,
-}: Props) => {
-  return (
-    <TouchableWithoutFeedback onPress={() => onSelect(stateAndCity)}>
-      <View
-        style={{
-          paddingVertical: 8,
-          borderBottomWidth: 1,
-          borderBottomColor: "#E0E0E0",
-        }}
-      >
-        <Text
-          style={{
-            color: "#6B46C1",
-            fontSize: 16,
-            fontFamily: "Nunito_600SemiBold",
-          }}
-        >
-          {stateAndCity}
-        </Text>
-        <Text
-          numberOfLines={1}
-          style={{
-            color: "#A0AEC0",
-            fontSize: 12,
-            fontFamily: "Nunito_400Regular",
-          }}
-        >
-          {description}
-        </Text>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
+import StateDropdown from "@/components/StateDropdown"; // ✅ Importando o Dropdown separado
 
 const Step1 = () => {
   const router = useRouter();
@@ -116,153 +73,155 @@ const Step1 = () => {
       }}
       accessible={false}
     >
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
-      >
-        <KeyboardAwareScrollView
+      <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <KeyboardAvoidingView
           style={{ flex: 1 }}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingTop: 20,
-            paddingHorizontal: 30,
-            paddingBottom: 50,
-          }}
-          keyboardShouldPersistTaps="handled"
-          extraScrollHeight={120}
-          enableOnAndroid
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
         >
-          <Animated.View
-            entering={FadeIn.delay(500).duration(500)}
-            style={{ marginTop: 40, alignItems: "center" }}
+          <KeyboardAwareScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingTop: 20,
+              paddingHorizontal: 30,
+              paddingBottom: 50,
+            }}
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={120}
+            enableOnAndroid
           >
-            <BackButton />
-            <Image
-              source={logoAlt}
-              contentFit="contain"
-              style={{ width: 100, height: 30 }}
-            />
-          </Animated.View>
-
-          <Animated.View
-            entering={FadeIn.delay(700).duration(500)}
-            style={{ flex: 1, width: "100%", gap: 16, marginTop: 60 }}
-          >
-            <Text
-              style={{
-                fontSize: 34,
-                fontWeight: "bold",
-                width: "100%",
-                marginBottom: 20,
-                fontFamily: fontFamily.nunito_bold,
-              }}
+            <Animated.View
+              entering={FadeIn.delay(500).duration(500)}
+              style={{ marginTop: 40, alignItems: "center" }}
             >
-              Para começar, insira seu endereço
-            </Text>
+              <BackButton />
+              <Image
+                source={logoAlt}
+                contentFit="contain"
+                style={{ width: 100, height: 30 }}
+              />
+            </Animated.View>
 
-            <View style={{ zIndex: 1000 }}>
+            <Animated.View
+              entering={FadeIn.delay(700).duration(500)}
+              style={{ flex: 1, width: "100%", gap: 16, marginTop: 60 }}
+            >
+              <Text
+                style={{
+                  fontSize: 34,
+                  fontWeight: "bold",
+                  width: "100%",
+                  marginBottom: 20,
+                  fontFamily: fontFamily.nunito_bold,
+                }}
+              >
+                Para começar, insira seu endereço
+              </Text>
+
+              <View style={{ zIndex: 1000 }}>
+                <InputComponent
+                  name="stateAndCity"
+                  control={control}
+                  placeholder="Insira sua cidade"
+                  leftIcon={{ name: "planeIcon", size: 20 }}
+                  style={{ color: "#6B46C1", paddingLeft: 30 }}
+                  autoCapitalize="words"
+                  onPressIn={() => setShowDropdown(true)}
+                />
+
+                {showDropdown && (
+                  <Animated.View
+                    entering={FadeIn}
+                    exiting={FadeOut}
+                    style={{
+                      backgroundColor: "white",
+                      paddingVertical: 8,
+                      paddingHorizontal: 16,
+                      borderRadius: 6,
+                      elevation: 5,
+                      shadowColor: "#000",
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.2,
+                      shadowRadius: 4,
+                      maxHeight: 300,
+                      marginTop: 4,
+                    }}
+                  >
+                    <ScrollView
+                      nestedScrollEnabled
+                      showsVerticalScrollIndicator
+                      keyboardShouldPersistTaps="handled"
+                    >
+                      {cities.map((cityName) => (
+                        <StateDropdown
+                          key={cityName}
+                          stateAndCity={cityName}
+                          onSelect={handleCitySelect}
+                        />
+                      ))}
+                    </ScrollView>
+                  </Animated.View>
+                )}
+              </View>
+
               <InputComponent
-                name="stateAndCity"
+                name="cep"
                 control={control}
-                placeholder="Insira sua cidade"
-                leftIcon={{ name: "planeIcon", size: 20 }}
-                style={{ color: "#6B46C1", paddingLeft: 30 }}
-                autoCapitalize="words"
-                onPressIn={() => setShowDropdown(true)}
+                label="CEP *"
+                placeholder="Insira seu CEP"
+                type="zip-code"
+                options={{ mask: "99999-999" }}
               />
 
-              {showDropdown && (
-                <Animated.View
-                  entering={FadeIn}
-                  exiting={FadeOut}
-                  style={{
-                    backgroundColor: "white",
-                    paddingVertical: 8,
-                    paddingHorizontal: 16,
-                    borderRadius: 6,
-                    elevation: 5,
-                    shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 4,
-                    maxHeight: 300,
-                    marginTop: 4,
-                  }}
-                >
-                  <ScrollView
-                    nestedScrollEnabled
-                    showsVerticalScrollIndicator
-                    keyboardShouldPersistTaps="handled"
-                  >
-                    {cities.map((cityName) => (
-                      <StateDropdown
-                        key={cityName}
-                        stateAndCity={cityName}
-                        onSelect={handleCitySelect}
-                      />
-                    ))}
-                  </ScrollView>
-                </Animated.View>
-              )}
-            </View>
+              <InputComponent
+                name="street"
+                control={control}
+                label="Endereço *"
+                placeholder="Insira seu endereço"
+              />
 
-            <InputComponent
-              name="cep"
-              control={control}
-              label="CEP *"
-              placeholder="Insira seu CEP"
-              type="zip-code"
-              options={{ mask: "99999-999" }}
-            />
+              <InputComponent
+                name="number"
+                control={control}
+                label="Número *"
+                placeholder="Insira seu número"
+                keyboardType="numeric"
+              />
 
-            <InputComponent
-              name="street"
-              control={control}
-              label="Endereço *"
-              placeholder="Insira seu endereço"
-            />
+              <InputComponent
+                name="complement"
+                control={control}
+                label="Complemento"
+                placeholder="Insira seu complemento"
+              />
 
-            <InputComponent
-              name="number"
-              control={control}
-              label="Número *"
-              placeholder="Insira seu número"
-              keyboardType="numeric"
-            />
+              <Text
+                style={{
+                  fontFamily: fontFamily.nunito_light,
+                  color: colors.primary[100],
+                  fontSize: 13,
+                  textAlign: "right",
+                }}
+              >
+                * campos obrigatórios
+              </Text>
+            </Animated.View>
 
-            <InputComponent
-              name="complement"
-              control={control}
-              label="Complemento"
-              placeholder="Insira seu complemento"
-            />
-
-            <Text
-              style={{
-                fontFamily: fontFamily.nunito_light,
-                color: colors.primary[100],
-                fontSize: 13,
-                textAlign: "right",
-              }}
+            <Animated.View
+              entering={FadeIn.delay(900).duration(500)}
+              style={{ marginTop: 60, alignSelf: "center" }}
             >
-              * campos obrigatórios
-            </Text>
-          </Animated.View>
-
-          <Animated.View
-            entering={FadeIn.delay(900).duration(500)}
-            style={{ marginTop: 60, alignSelf:"center" }}
-          >
-            <GradientButton
-              title="Continuar"
-              onPress={handleSubmit(onSubmit)}
-              gradientColors={["#8e2de2", "#4a00e0"]}
-              textColor={colors.white}
-            />
-          </Animated.View>
-        </KeyboardAwareScrollView>
-      </KeyboardAvoidingView>
+              <GradientButton
+                title="Continuar"
+                onPress={handleSubmit(onSubmit)}
+                gradientColors={["#8e2de2", "#4a00e0"]}
+                textColor={colors.white}
+              />
+            </Animated.View>
+          </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

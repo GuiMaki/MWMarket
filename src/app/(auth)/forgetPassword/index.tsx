@@ -16,7 +16,10 @@ import { logoAlt } from "@/assets";
 import fontFamily from "@/global/fontFamily";
 import colors from "@/global/colors";
 import InputComponent from "@/components/InputComponent";
-import { RecoverPasswordSchema, RecoverPasswordForm } from "@/validations/Login.Validation";
+import {
+  RecoverPasswordSchema,
+  RecoverPasswordForm,
+} from "@/validations/Login.Validation";
 import GradientButton from "@/components/GradientButton";
 
 const ForgetPassword = () => {
@@ -40,78 +43,80 @@ const ForgetPassword = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView
-        style={{
-          marginTop: 20,
-          marginLeft: 30,
-          marginRight: 30,
-          flex: 1,
-        }}
-      >
-        <Animated.View
-          entering={FadeIn.delay(500).duration(500)}
-          style={{ marginTop: 40, gap:20}}
+      <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <SafeAreaView
+          style={{
+            marginTop: 20,
+            marginLeft: 30,
+            marginRight: 30,
+            flex: 1,
+          }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignContent: "center",
-              justifyContent: "center",
-              position: "fixed",
-              top: 0
-            }}
+          <Animated.View
+            entering={FadeIn.delay(500).duration(500)}
+            style={{ marginTop: 40, gap: 20 }}
           >
-            <BackButton />
+            <View
+              style={{
+                flexDirection: "row",
+                alignContent: "center",
+                justifyContent: "center",
+                position: "fixed",
+                top: 0,
+              }}
+            >
+              <BackButton />
 
-            <Image
-              source={logoAlt}
-              contentFit="contain"
-              style={{ width: 100, height: 30 }}
+              <Image
+                source={logoAlt}
+                contentFit="contain"
+                style={{ width: 100, height: 30 }}
+              />
+            </View>
+
+            <Text
+              style={{
+                fontFamily: fontFamily.nunito_bold[0],
+                fontSize: 35,
+                fontWeight: "900",
+                marginTop: 30,
+              }}
+            >
+              Esqueçeu a senha?
+            </Text>
+
+            <Text
+              style={{
+                fontFamily: fontFamily.nunito,
+                fontSize: 16,
+                marginTop: 20,
+                marginBottom: 20,
+                color: colors.gray,
+              }}
+            >
+              Digite seu e-mail abaixo para receber as instruções de redefinição
+              de senha.
+            </Text>
+
+            <InputComponent
+              name="email"
+              label="E-mail"
+              placeholder="example@email.com"
+              keyboardType="email-address"
+              control={control}
+              error={errors.email}
             />
-          </View>
 
-          <Text
-            style={{
-              fontFamily: fontFamily.nunito_bold[0],
-              fontSize: 35,
-              fontWeight: "900",
-              marginTop: 30,
-            }}
-          >
-            Esqueçeu a senha?
-          </Text>
-
-          <Text
-            style={{
-              fontFamily: fontFamily.nunito,
-              fontSize: 16,
-              marginTop: 20,
-              marginBottom: 20,
-              color: colors.gray,
-            }}
-          >
-            Digite seu e-mail abaixo para receber as instruções de redefinição
-            de senha.
-          </Text>
-
-          <InputComponent
-            name="email"
-            label="E-mail"
-            placeholder="example@email.com"
-            keyboardType="email-address"
-            control={control}
-            error={errors.email}
-          />
-
-          <GradientButton
-            title="Recuperar Senha"
-            gradientColors={["#8e2de2", "#4a00e0"]}
-            textColor={colors.white}
-            style={{ marginTop: 100, alignSelf: "center" }}
-            onPress={handleSubmit(onSubmit, onError)}
-          />
-        </Animated.View>
-      </SafeAreaView>
+            <GradientButton
+              title="Recuperar Senha"
+              gradientColors={["#8e2de2", "#4a00e0"]}
+              textColor={colors.white}
+              style={{ marginTop: 100, alignSelf: "center" }}
+              onPress={handleSubmit(onSubmit, onError)}
+            />
+          </Animated.View>
+        </SafeAreaView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

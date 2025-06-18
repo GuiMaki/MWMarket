@@ -1,24 +1,20 @@
-import { UseFormSetValue } from 'react-hook-form';
-import { Text, TouchableOpacity, Keyboard } from 'react-native';
-
-import { RegisterForm } from '@/validations/Register.Validation';
+import React from "react";
+import { Text, TouchableOpacity, Keyboard } from "react-native";
 
 interface Props {
   stateAndCity: string;
   description?: string;
-  setValue?: UseFormSetValue<RegisterForm>;
+  onSelect: (value: string) => void;
 }
 
 const StateDropdown = ({
   stateAndCity,
   description = "Localização aproximada",
-  setValue,
+  onSelect,
 }: Props) => {
   const handlePress = () => {
-    Keyboard.dismiss(); // Fecha o teclado imediatamente
-    if (setValue) {
-      setValue("stateAndCity", stateAndCity); // Atualiza o valor
-    }
+    Keyboard.dismiss();
+    onSelect(stateAndCity);
   };
 
   return (

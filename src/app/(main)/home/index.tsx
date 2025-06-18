@@ -1,4 +1,5 @@
 import { Text, View, ScrollView } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { Image } from "expo-image";
@@ -23,7 +24,7 @@ import NavBar from "@/components/NavBar";
 
 const Home = () => {
   return (
-    <View>
+    <View style={{ backgroundColor: colors.white }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <SafeAreaView style={{ backgroundColor: colors.white }}>
           <View

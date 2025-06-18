@@ -65,140 +65,142 @@ const FinalStep = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingTop: 20,
-          paddingHorizontal: 30,
-          paddingBottom: 50,
-        }}
-        extraScrollHeight={30}
-        enableOnAndroid={true}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Animated.View
-          entering={FadeIn.delay(400).duration(600)}
-          style={{ marginTop: 40, alignItems: "center" }}
-        >
-          <BackButton />
-          <Image
-            source={logoAlt}
-            contentFit="contain"
-            style={{ width: 100, height: 30 }}
-          />
-        </Animated.View>
-
-        <Animated.Text
-          entering={FadeIn.delay(700).duration(600)}
-          style={{
-            fontSize: 34,
-            fontWeight: "bold",
-            width: "100%",
-            marginTop: 40,
-            fontFamily: fontFamily.nunito_bold,
+      <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <KeyboardAwareScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingTop: 20,
+            paddingHorizontal: 30,
+            paddingBottom: 50,
           }}
+          extraScrollHeight={30}
+          enableOnAndroid={true}
+          keyboardShouldPersistTaps="handled"
         >
-          Para finalizar, insira uma foto de perfil
-        </Animated.Text>
+          <Animated.View
+            entering={FadeIn.delay(400).duration(600)}
+            style={{ marginTop: 40, alignItems: "center" }}
+          >
+            <BackButton />
+            <Image
+              source={logoAlt}
+              contentFit="contain"
+              style={{ width: 100, height: 30 }}
+            />
+          </Animated.View>
 
-        <Animated.View
-          entering={FadeIn.delay(1000).duration(600)}
-          style={{ width: "100%", gap: 16, marginTop: 60 }}
-        >
-          <View
+          <Animated.Text
+            entering={FadeIn.delay(700).duration(600)}
             style={{
-              alignSelf: "center",
-              width: 250,
-              height: 250,
-              position: "relative",
+              fontSize: 34,
+              fontWeight: "bold",
+              width: "100%",
+              marginTop: 40,
+              fontFamily: fontFamily.nunito_bold,
             }}
           >
-            <Image
-              source={profilePicPicker}
-              style={{
-                width: 250,
-                height: 250,
-                position: "absolute",
-                top: 0,
-                left: 0,
-              }}
-            />
+            Para finalizar, insira uma foto de perfil
+          </Animated.Text>
 
-            <TouchableOpacity
-              onPress={handlePicPicker}
+          <Animated.View
+            entering={FadeIn.delay(1000).duration(600)}
+            style={{ width: "100%", gap: 16, marginTop: 60 }}
+          >
+            <View
               style={{
-                zIndex: 1,
-                borderRadius: 125,
-                overflow: "hidden",
+                alignSelf: "center",
                 width: 250,
                 height: 250,
+                position: "relative",
               }}
             >
               <Image
-                source={
-                  selectedImage ? { uri: selectedImage } : defaultProfilePic
-                }
-                style={{ width: 250, height: 250, borderRadius: 125 }}
-              />
-            </TouchableOpacity>
-            {selectedImage && (
-              <TouchableOpacity
-                onPress={handleRemoveImage}
+                source={profilePicPicker}
                 style={{
+                  width: 250,
+                  height: 250,
                   position: "absolute",
-                  top: 10, 
-                  left: 10, 
-                  padding: 10,
-                  backgroundColor: "#CFCFCF",
-                  borderRadius: 50,
-                  zIndex: 1000,
+                  top: 0,
+                  left: 0,
+                }}
+              />
+
+              <TouchableOpacity
+                onPress={handlePicPicker}
+                style={{
+                  zIndex: 1,
+                  borderRadius: 125,
+                  overflow: "hidden",
+                  width: 250,
+                  height: 250,
                 }}
               >
-                <Text
+                <Image
+                  source={
+                    selectedImage ? { uri: selectedImage } : defaultProfilePic
+                  }
+                  style={{ width: 250, height: 250, borderRadius: 125 }}
+                />
+              </TouchableOpacity>
+              {selectedImage && (
+                <TouchableOpacity
+                  onPress={handleRemoveImage}
                   style={{
-                    color: colors.white,
-                    fontFamily: fontFamily.nunito_bold,
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    padding: 10,
+                    backgroundColor: "#CFCFCF",
+                    borderRadius: 50,
+                    zIndex: 1000,
                   }}
                 >
-                  ❌
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <Text
-            style={{
-              fontFamily: fontFamily.nunito_light,
-              color: colors.gray,
-              fontSize: 17,
-              alignSelf: "center",
-            }}
+                  <Text
+                    style={{
+                      color: colors.white,
+                      fontFamily: fontFamily.nunito_bold,
+                    }}
+                  >
+                    ❌
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text
+              style={{
+                fontFamily: fontFamily.nunito_light,
+                color: colors.gray,
+                fontSize: 17,
+                alignSelf: "center",
+              }}
+            >
+              Selecionar foto de perfil
+            </Text>
+          </Animated.View>
+
+          <Animated.View
+            entering={FadeIn.delay(1300).duration(600)}
+            style={{ marginTop: 110, alignSelf: "center" }}
           >
-            Selecionar foto de perfil
-          </Text>
-        </Animated.View>
+            <Button
+              title="Pular essa etapa"
+              onPress={handleSubmit(onSubmit)}
+              backgroundColor={colors.gray}
+              wired={true}
+              style={{ height: 60 }}
+            />
 
-        <Animated.View
-          entering={FadeIn.delay(1300).duration(600)}
-          style={{ marginTop: 110, alignSelf: "center" }}
-        >
-          <Button
-            title="Pular essa etapa"
-            onPress={handleSubmit(onSubmit)}
-            backgroundColor={colors.gray}
-            wired={true}
-            style={{ height: 60 }}
-          />
-
-          <GradientButton
-            title="Continuar"
-            onPress={handleSubmit(onSubmit)}
-            gradientColors={["#8e2de2", "#4a00e0"]}
-            textColor={colors.white}
-            style={{ marginTop: 30 }}
-          />
-        </Animated.View>
-      </KeyboardAwareScrollView>
+            <GradientButton
+              title="Continuar"
+              onPress={handleSubmit(onSubmit)}
+              gradientColors={["#8e2de2", "#4a00e0"]}
+              textColor={colors.white}
+              style={{ marginTop: 30 }}
+            />
+          </Animated.View>
+        </KeyboardAwareScrollView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
