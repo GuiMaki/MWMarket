@@ -16,6 +16,9 @@ import colors from "@/global/colors";
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width;
 
+const BANNER_RATIO = 9 / 21;
+const ITEM_HEIGHT = ITEM_WIDTH * BANNER_RATIO;
+
 const images: ImageSourcePropType[] = [
   banner,
   banner,
@@ -40,7 +43,7 @@ const BannerCarroussel = () => {
   return (
     <View>
       <StatusBar hidden />
-      <View style={{ height: 200 }}>
+      <View style={{ height: ITEM_HEIGHT }}>
         <FlatList
           data={images}
           horizontal
@@ -52,10 +55,14 @@ const BannerCarroussel = () => {
           onScroll={handleScroll}
           scrollEventThrottle={16}
           renderItem={({ item }) => (
-            <View style={{ width: ITEM_WIDTH, height: 200 }}>
+            <View style={{ width: ITEM_WIDTH, height: ITEM_HEIGHT }}>
               <Image
                 source={item}
-                style={{ width: ITEM_WIDTH, height: 200, resizeMode: "cover" }}
+                style={{
+                  width: ITEM_WIDTH,
+                  height: ITEM_HEIGHT,
+                  resizeMode: "cover", 
+                }}
               />
             </View>
           )}
