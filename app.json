@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/expo/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#21ffb5"
     },
     "ios": {
       "supportsTablet": true
@@ -19,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/expo/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "##21ffb5"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.guimaki.MWMarket"
